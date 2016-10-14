@@ -19,6 +19,7 @@ namespace Reversi
                 for (int j = 0; j < n; j++)
                 {
                     veld[i, j] = new Button();
+                    veld[i, j].BackColor = Color.LightGray;
                     veld[i,j].Size = new Size(50,50);
                     veld[i,j].Location = new Point(i * 50, j * 50);
 
@@ -26,6 +27,11 @@ namespace Reversi
                 }
 
             }
+            Button settings = new Button();
+            settings.Size = new Size(80, 50);
+            settings.Location = new Point((n + 1) * 50);
+            settings.Text = "Settings";
+            this.Controls.Add(settings);
         }
     }
 
