@@ -26,13 +26,8 @@ namespace Reversi
                     veld[i, j].Location = new Point(i * 50, j * 50);
 
                     this.Controls.Add(veld[i, j]);
+                    veld[i, j].Click += veldkleur;
                     
-
-                   // if (gespeeld[i, j] == false)
-                    //{
-                      //  gespeeld[i, j] = true;
-                        veld[i, j].Click += veldkleur;
-                    //}
                  }
 
 
