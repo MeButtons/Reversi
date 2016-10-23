@@ -9,11 +9,13 @@ namespace Reversi
 {
     class Veld : Form
     {
-
+        int beurt = 1;
+       
         public Veld()
         {
             int n = 4;
             Button[,] veld = new Button[n, n];
+            bool[,] gespeeld = new bool[n, n];
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
@@ -24,7 +26,15 @@ namespace Reversi
                     veld[i, j].Location = new Point(i * 50, j * 50);
 
                     this.Controls.Add(veld[i, j]);
-                }
+                    
+
+                   // if (gespeeld[i, j] == false)
+                    //{
+                      //  gespeeld[i, j] = true;
+                        veld[i, j].Click += veldkleur;
+                    //}
+                 }
+
 
             }
             Button settings = new Button();
@@ -32,8 +42,33 @@ namespace Reversi
             settings.Location = new Point((n + 1) * 50);
             settings.Text = "Settings";
             this.Controls.Add(settings);
+ 
         }
+
+        public void veldkleur(object sender, EventArgs e)
+        {
+
+            
+            Button myButton = sender as Button;
+
+            if (myButton.BackColor != Color.Red && myButton.BackColor != Color.Blue)
+            {
+                if (beurt == 1)
+                {
+                    myButton.BackColor = Color.Red;
+
+                    beurt = 2;
+                }
+                else if (beurt == 2)
+                {
+                    myButton.BackColor = Color.Blue;
+                    beurt = 1;
+                }
+            }
+        }
+                    
     }
+
 
 
 
