@@ -9,7 +9,7 @@ namespace Reversi
 {
     class Veld : Form
     {
-        int beurt = 1, aantalblauw=0, aantalrood=0;
+        int beurt = 1, aantalblauw=2, aantalrood=2;
         int lengte = 400, breedte = 400;
         private Label LabelBlauw, LabelRood;
         public Veld()
@@ -24,11 +24,27 @@ namespace Reversi
             {
                 for (int j = 0; j < n; j++)
                 {
-                    veld[i, j] = new Button();
-                    veld[i, j].BackColor = Color.LightGray;
-                    veld[i, j].Size = new Size(50, 50);
-                    veld[i, j].Location = new Point(i * 50 + 50, j * 50 + 50);
-
+                    if ((i == (n / 2-1) && j == (n / 2-1)) || (i == n / 2 && j == n / 2))  // Rode beginstenen plaatsen
+                    {
+                        veld[i, j] = new Button();
+                        veld[i, j].BackColor = Color.Red;
+                        veld[i, j].Size = new Size(50, 50);
+                        veld[i, j].Location = new Point(i * 50 + 50, j * 50 + 50);
+                    }
+                    else if ((i == n / 2 && j == (n / 2-1)) || (i == (n / 2-1) && j == n / 2)) // Blauwe beginstenen plaatsen
+                    {
+                        veld[i, j] = new Button();
+                        veld[i, j].BackColor = Color.Blue;
+                        veld[i, j].Size = new Size(50, 50);
+                        veld[i, j].Location = new Point(i * 50 + 50, j * 50 + 50);
+                    }
+                    else                                                                       // "Neutrale" stenen plaatsen
+                    {
+                        veld[i, j] = new Button();
+                        veld[i, j].BackColor = Color.LightGray;
+                        veld[i, j].Size = new Size(50, 50);
+                        veld[i, j].Location = new Point(i * 50 + 50, j * 50 + 50);
+                    }
                     this.Controls.Add(veld[i, j]);
                     veld[i, j].Click += veldkleur;
                     
