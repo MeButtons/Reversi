@@ -40,7 +40,7 @@ namespace Reversi
         {
             try
             {
-                if (int.Parse(groote.Text) < 25 && int.Parse(groote.Text) >= 3)
+                if (int.Parse(groote.Text) <= 25 && int.Parse(groote.Text) >= 3)
                 {
                     blokjes = int.Parse(groote.Text);
                     this.Close();
@@ -105,12 +105,13 @@ namespace Reversi
         public int n = 20;
         int beurt = 1, aantalblauw = 2, aantalrood = 2;
         int lengte = 400, breedte = 400;
-        private Label LabelBlauw, LabelRood;
+        public Label LabelBlauw, LabelRood;
+        public Button settings;
         Button[,] veld;
         bool zetMag = false;
         public Veld()
         {
-            veld = new Button[n, n];
+            veld = new Button[25, 25];
             this.Size = new Size(lengte, breedte);
 
 
@@ -149,7 +150,7 @@ namespace Reversi
 
 
             }
-            Button settings = new Button();
+            this.settings = new Button();
             settings.Size = new Size(80, 50);
             settings.Location = new Point(n / 2 * 50);
             settings.Text = "Settings";
@@ -176,7 +177,12 @@ namespace Reversi
             Settings SettingsButton = new Settings();
             SettingsButton.ShowDialog();
 
-            this.Invalidate();
+           
+
+            //verwijderen van labels en knop
+            Controls.Remove(settings);
+            Controls.Remove(LabelBlauw);
+            Controls.Remove(LabelRood);
 
             for (int i = 0; i < n; i++)                 // verwijderen van de knoppen
             {
@@ -186,6 +192,8 @@ namespace Reversi
                 }
             }
             n = SettingsButton.blokjes;
+
+            //nieuwe knoppen tekenen met nieuwe groote van het veld
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
@@ -216,6 +224,19 @@ namespace Reversi
 
                 }
             }
+
+            
+            this.Size = new Size(n * 50 + 100, n * 50 + 100); //aanpassen size form
+
+            //aanpassen locaties van de labels en knop
+            settings.Location = new Point(n / 2 * 50);
+            this.LabelBlauw.Location = new Point(n / 10 * 50, 12);
+            this.LabelRood.Location = new Point(n * 40, 12);
+
+            //labels en knop op aangepaste locatie toevoegen
+            this.Controls.Add(settings);
+            this.Controls.Add(LabelBlauw);
+            this.Controls.Add(LabelRood);
         }
 
         public void veldkleur(object sender, EventArgs e)
