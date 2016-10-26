@@ -9,16 +9,20 @@ namespace Reversi
 {
     class Veld : Form
     {
+        bool zetMag = false;
         int beurt = 1, aantalblauw=2, aantalrood=2;
         int lengte = 400, breedte = 400;
         private Label LabelBlauw, LabelRood;
+        Button[,] veld;
+
         public Veld()
         {
             this.Size = new Size(lengte,breedte);
             int n = 4;
-            Button[,] veld = new Button[n, n];
+          
+            veld = new Button[n, n];
+
             bool[,] gespeeld = new bool[n, n];
-           
 
             for (int i = 0; i < n; i++)
             {
@@ -72,6 +76,135 @@ namespace Reversi
  
         }
 
+        public bool checkZet(int bekijkX, int bekijkY)
+        {
+            int lengteRij = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                checkBuur(i, bekijkX, bekijkY, lengteRij);
+                lengteRij = 0;
+            }
+            if (zetMag == false)
+                return false;
+            return true;
+        }
+
+        public void checkBuur(int buur, int bekijkX, int bekijkY, int lengteRij)
+        {
+            Color KleurSpeler;
+            Color kleurTegenstander;
+            if (beurt % 2 == 1)
+            {
+                kleurTegenstander = Color.Blue;
+                KleurSpeler = Color.Red;
+            }
+            else
+            {
+                kleurTegenstander = Color.Red;
+                KleurSpeler = Color.Blue;
+            }
+            switch (buur)
+            {
+                case 0:
+                    if (veld[bekijkX - 1, bekijkY - 1].BackColor == kleurTegenstander)
+                    {
+                        lengteRij++;
+                        checkBuur(buur, bekijkX - 1, bekijkY - 1, lengteRij);
+                    }
+                    if (veld[bekijkX - 1, bekijkY - 1].BackColor == KleurSpeler && lengteRij > 0)
+                    {
+                        lengteRij--;
+                        veld[bekijkX, bekijkY].BackColor = KleurSpeler;
+                    }
+                    break;
+                case 1:
+                    if (veld[bekijkX, bekijkY - 1].BackColor == kleurTegenstander)
+                    {
+                        lengteRij++;
+                        checkBuur(buur, bekijkX, bekijkY - 1, lengteRij);
+                    }
+                    if (veld[bekijkX, bekijkY - 1].BackColor == KleurSpeler && lengteRij > 0)
+                    {
+                        lengteRij--;
+                        veld[bekijkX, bekijkY].BackColor = KleurSpeler;
+                    }
+                    break;
+                case 2:
+                    if (veld[bekijkX + 1, bekijkY - 1].BackColor == kleurTegenstander)
+                    {
+                        lengteRij++;
+                        checkBuur(buur, bekijkX + 1, bekijkY - 1, lengteRij);
+                    }
+                    if (veld[bekijkX + 1, bekijkY - 1].BackColor == KleurSpeler && lengteRij > 0)
+                    {
+                        lengteRij--;
+                        veld[bekijkX, bekijkY].BackColor = KleurSpeler;
+                    }
+                    break;
+                case 3:
+                    if (veld[bekijkX + 1, bekijkY].BackColor == kleurTegenstander)
+                    {
+                        lengteRij++;
+                        checkBuur(buur, bekijkX + 1, bekijkY, lengteRij);
+                    }
+                    if (veld[bekijkX + 1, bekijkY].BackColor == KleurSpeler && lengteRij > 0)
+                    {
+                        lengteRij--;
+                        veld[bekijkX, bekijkY].BackColor = KleurSpeler;
+                    }
+                    break;
+                case 4:
+                    if (veld[bekijkX + 1, bekijkY + 1].BackColor == kleurTegenstander)
+                    {
+                        lengteRij++;
+                        checkBuur(buur, bekijkX + 1, bekijkY + 1, lengteRij);
+                    }
+                    if (veld[bekijkX + 1, bekijkY + 1].BackColor == KleurSpeler && lengteRij > 0)
+                    {
+                        lengteRij--;
+                        veld[bekijkX, bekijkY].BackColor = KleurSpeler;
+                    }
+                    break;
+                case 5:
+                    if (veld[bekijkX, bekijkY + 1].BackColor == kleurTegenstander)
+                    {
+                        lengteRij++;
+                        checkBuur(buur, bekijkX, bekijkY + 1, lengteRij);
+                    }
+                    if (veld[bekijkX, bekijkY + 1].BackColor == KleurSpeler && lengteRij > 0)
+                    {
+                        lengteRij--;
+                        veld[bekijkX, bekijkY].BackColor = KleurSpeler;
+                    }
+                    break;
+                case 6:
+                    if (veld[bekijkX - 1, bekijkY + 1].BackColor == kleurTegenstander)
+                    {
+                        lengteRij++;
+                        checkBuur(buur, bekijkX - 1, bekijkY + 1, lengteRij);
+                    }
+                    if (veld[bekijkX - 1, bekijkY + 1].BackColor == KleurSpeler && lengteRij > 0)
+                    {
+                        lengteRij--;
+                        veld[bekijkX, bekijkY].BackColor = KleurSpeler;
+                    }
+                    break;
+                case 7:
+                    if (veld[bekijkX - 1, bekijkY].BackColor == kleurTegenstander)
+                    {
+                        lengteRij++;
+                        checkBuur(buur, bekijkX - 1, bekijkY, lengteRij);
+                    }
+                    if (veld[bekijkX - 1, bekijkY].BackColor == KleurSpeler && lengteRij > 0)
+                    {
+                        lengteRij--;
+                        veld[bekijkX, bekijkY].BackColor = KleurSpeler;
+                    }
+                    break;
+            }
+
+        }
+       
         public void veldkleur(object sender, EventArgs e)
         {
 
@@ -98,56 +231,6 @@ namespace Reversi
             }
         }
                     
-    }
-
-    class Spel
-    {
-        Spel()
-        {
-
-        }
-
-        public bool checkBuren()
-        {
-            for(int i = 0; i<8; i++)
-            {
-                checkBuur(i);
-            }
-            return true;
-        }
-
-        public void checkBuur(int buur)
-        {
-            switch (buur)
-            {
-                case 0:
-                    //veldx-1, veldy-1
-                    break;
-                case 1:
-                    //veldy-1
-                    break;
-                case 2:
-                    //veldx+1, veldy-1
-                    break;
-                case 3:
-                    //veldx+1
-                    break;
-                case 4:
-                    //veldx+1, veldy+1
-                    break;
-                case 5:
-                    //veldy+1
-                    break;
-                case 6:
-                    //veldx-1, veldy+1
-                    break;
-                case 7:
-                    //veldx-1
-                    break;
-            }
-        }
-
-
     }
 
     static class Program
