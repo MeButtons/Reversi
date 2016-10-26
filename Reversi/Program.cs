@@ -15,7 +15,7 @@ namespace Reversi
         public Veld()
         {
             this.Size = new Size(lengte,breedte);
-            int n = 4;
+            int n = 9;
             Button[,] veld = new Button[n, n];
             bool[,] gespeeld = new bool[n, n];
            
